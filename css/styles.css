@@ -1,0 +1,102 @@
+*, *::before, *::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+:root {
+	--brand-navy: #17324d;
+	--brand-blue: #0f766e;
+	--brand-cyan: #22d3ee;
+	--brand-gold: #f97316;
+	--brand-cream: #fff4e6;
+	--text-primary: #243b53;
+	--shadow-soft: 0 10px 24px rgba(23, 50, 77, 0.14);
+}
+
+body {
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+	color: var(--text-primary);
+	line-height: 1.6;
+	background: radial-gradient(circle at 14% 0%, #f0fff8 0%, #e9fbff 36%, #ffffff 100%);
+}
+
+.hero-section {
+	min-height: 70vh;
+	padding: 5rem 0;
+	background:
+		radial-gradient(circle at 18% 22%, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 32%),
+		linear-gradient(135deg, #0f766e 0%, #0b5f84 52%, #17324d 100%);
+	text-align: center;
+}
+
+.hero-section .lead {
+	max-width: 680px;
+	margin: 1rem auto 0;
+}
+
+.card,
+.insurance-type {
+	border: 1px solid rgba(17, 42, 70, 0.1);
+	border-radius: 0.75rem;
+	transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card:hover,
+.insurance-type:hover {
+	transform: translateY(-6px);
+	box-shadow: var(--shadow-soft);
+}
+
+.insurance-type {
+	border-top: 4px solid var(--brand-cyan);
+	background: linear-gradient(180deg, #ffffff 0%, #f0fffb 100%);
+}
+
+.btn-warning {
+	background-color: var(--brand-gold);
+	border-color: var(--brand-gold);
+	color: #ffffff;
+	font-weight: 700;
+}
+
+.btn-warning:hover,
+.btn-warning:focus {
+	background-color: #ea580c;
+	border-color: #ea580c;
+	color: #ffffff;
+}
+
+main section:nth-of-type(2) {
+	background: linear-gradient(180deg, #ffffff 0%, #effcf7 100%);
+}
+
+footer {
+	background: linear-gradient(90deg, var(--brand-navy) 0%, #0d2038 100%);
+	border-top: 3px solid var(--brand-cyan);
+}
+
+footer p {
+	font-size: 0.95rem;
+}
+
+@media (max-width: 767.98px) {
+	.hero-section {
+		min-height: auto;
+		padding: 4rem 1rem;
+	}
+
+	.hero-section h1 {
+		font-size: 2.2rem;
+	}
+
+	.card,
+	.insurance-type {
+		margin-bottom: 0.5rem;
+	}
+
+	footer {
+		padding-left: 1rem;
+		padding-right: 1rem;
+	}
+}
