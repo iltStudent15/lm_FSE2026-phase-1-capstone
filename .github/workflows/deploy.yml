@@ -1,0 +1,77 @@
+name: Validate and Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Check HTML files exist
+        run: |
+          echo "Checking for required HTML files..."
+          for file in index.html quote.html about.html faq.html; do
+            if [ ! -f "$file" ]; then
+              echo "ERROR: $file is missing!"
+              exit 1
+            else
+              echo "✓ $file found"
+            fi
+          done
+
+      - name: Check CSS and JS files exist
+        run: |
+          echo "Checking for required asset files..."
+          for file in css/styles.css js/quote.js js/main.js; do
+            if [ ! -f "$file" ]; then
+              echo "ERROR: $file is missing!"
+              exit 1
+            else
+              echo "✓ $file found"
+            fi
+          done
+
+      - name: Validate HTML structure
+        run: |
+          echo "Checking HTML files for DOCTYPE and lang attribute..."
+          for file in index.html quote.html about.html faq.html; do
+            if ! head -5 "$file" | grep -qi "doctype"; then
+              echo "WARNING: $file may be missing <!DOCTYPE html>"
+            fi
+            if ! head -5 "$file" | grep -qi 'lang='; then
+              echo "WARNING: $file may be missing lang attribute"
+            fi
+            echo "✓ $file structure looks good"
+          done
+
+  deploy:
+    needs: validate
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
